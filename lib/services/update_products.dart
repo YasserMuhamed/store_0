@@ -1,23 +1,23 @@
 import 'package:store_0/helper/api.dart';
 import 'package:store_0/models/product_model.dart';
 
-class UpdateProduct {
+class UpdateProductService {
   Future<ProductModel> updateProduct(
       {required String title,
       required String category,
       required String description,
       required String image,
-      required int id,
-      required double price}) async {
+      required String price,
+      required String id}) async {
     ProductModel data = await Api().put(
-        url: "https://fakestoreapi.com/products",
+        url: "https://fakestoreapi.com/products/$id",
         body: {
-          "id": id,
           "title": title,
           "price": price,
           "description": description,
           "image": image,
-          "category": category
+          "category": category,
+          "id": id
         },
         token: '');
     return data;

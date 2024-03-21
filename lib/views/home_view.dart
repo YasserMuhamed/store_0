@@ -22,13 +22,13 @@ class HomeView extends StatelessWidget {
       ),
       body: Padding(
           padding: const EdgeInsets.only(top: 65, left: 12, right: 12),
-          child: FutureBuilder<List<ProductModel>>(
-              future: AllProductsService().getProducts(),
+          child: StreamBuilder<List<ProductModel>>(
+              stream: AllProductsService().getProducts().asStream(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  List<ProductModel> Products = snapshot.data!;
+                  List<ProductModel> products = snapshot.data!;
                   return GridView.builder(
-                      itemCount: Products.length,
+                      itemCount: products.length,
                       clipBehavior: Clip.none,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -37,7 +37,7 @@ class HomeView extends StatelessWidget {
                               crossAxisSpacing: 10,
                               childAspectRatio: 1.5),
                       itemBuilder: (context, index) => CustomCard(
-                            product: Products[index],
+                            product: products[index],
                           ));
                 } else {
                   return const Center(child: CircularProgressIndicator());
